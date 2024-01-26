@@ -111,7 +111,7 @@ public class GameScreen extends ScreenAdapter{
 		this.world = world;
 	}
 
-
+	// test
 	@Override
 	public String toString() {
 		return "GameScreen [oponnentAI=" + oponnentAI + "]";
