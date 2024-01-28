@@ -101,9 +101,6 @@ public class GameScreen extends ScreenAdapter{
 		drawScore(batch, player.getScore(), 64, Pong.INSTANCE.getScreenHeight()-64, 64, 64);
 		drawScore(batch, oponnentAI.getScore(),Pong.INSTANCE.getScreenWidth()-128, Pong.INSTANCE.getScreenHeight()-64, 64, 64);
 		batch.end();
-		
-		System.out.println("PLAYER: " + this.player.getScore());
-		System.out.println("IA: " + this.oponnentAI.getScore());
 		//this.box2DDebugRenderer.render(getWorld(), camera.combined.scl(WorldConstants.ppm));
 	}
 
