@@ -16,5 +16,6 @@ public class DesktopLauncher {
 		config.setWindowSizeLimits(960, 640, 960, 640);
 		//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		new Lwjgl3Application(new Pong(), config);
+		
 	}
 }
