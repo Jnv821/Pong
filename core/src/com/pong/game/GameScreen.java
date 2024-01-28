@@ -3,7 +3,9 @@ package com.pong.game;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -32,6 +34,7 @@ public class GameScreen extends ScreenAdapter{
 	private OponnentPaddle oponnentAI;
 	private Ball ball;
 	private Wall [] walls = new Wall[2];
+	private TextureRegion[] scores;
 	
 	public GameScreen(OrthographicCamera camera) {
 		super();
@@ -56,6 +59,7 @@ public class GameScreen extends ScreenAdapter{
 		
 		this.walls[0] = new Wall(0,32,this);
 		this.walls[1] = new Wall(0,Pong.INSTANCE.getScreenHeight()-32, this);
+		this.scores = loadTextureSprite("Scores.png", 10);
 	}
 	
 	
@@ -94,6 +98,8 @@ public class GameScreen extends ScreenAdapter{
 		this.oponnentAI.render(batch);
 		this.walls[0].render(batch);
 		this.walls[1].render(batch);
+		drawScore(batch, player.getScore(), 64, Pong.INSTANCE.getScreenHeight()-64, 64, 64);
+		drawScore(batch, oponnentAI.getScore(),Pong.INSTANCE.getScreenWidth()-128, Pong.INSTANCE.getScreenHeight()-64, 64, 64);
 		batch.end();
 		
 		System.out.println("PLAYER: " + this.player.getScore());
@@ -101,7 +107,20 @@ public class GameScreen extends ScreenAdapter{
 		//this.box2DDebugRenderer.render(getWorld(), camera.combined.scl(WorldConstants.ppm));
 	}
 
+	private TextureRegion[] loadTextureSprite(String filename, int columns) {
+		Texture texture = new Texture(filename);
+		return TextureRegion.split(texture, texture.getWidth()/columns, texture.getHeight())[0];
+	}
 
+	private void drawScore(SpriteBatch batch, int score, float x, float y, float width, float height) {
+		if(score < 10) {
+			batch.draw(scores[score], x, y, width, height);
+		} else {
+			batch.draw(scores[ Integer.parseInt((""+score).substring(0,1))],x,y,width,height);
+			batch.draw(scores[ Integer.parseInt((""+score).substring(1,2))],x+64,y,width,height); // 16 is the px of column
+		}
+	}
+	
 	public World getWorld() {
 		return world;
 	}
